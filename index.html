@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <title>To Do App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            min-height: 100vh;
+            background-color: black;
+        }
+
+        .container .add-task {
+            /* display: flex;
+            justify-content: center; */
+            text-align: center;
+            padding: 14px;
+        }
+
+        .container .add-task input {
+            width: 50%;
+            padding: 10px;
+            outline: none;
+            border: none;
+            border-radius: 6px;
+        }
+
+        .container .add-task button {
+            padding: 10px;
+            border-radius: 6px;
+            border: none;
+        }
+
+        .container .add-task .btn:hover {
+            background-color: rgb(254, 166, 181);
+        }
+
+        .container p {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: auto;
+            background-color: white;
+            margin-top: 10px;
+            padding-left: 10px;
+            /* padding: 10px; */
+            font-size: 18px;
+            font-weight: 500;
+            max-width: 40%;
+            border-radius: 7px;
+        }
+
+        .container p i {
+            padding: 10px;
+            border-radius: 7px;
+        }
+
+        .container p i:hover {
+            background-color: rgb(254, 166, 181);
+            color: black;
+        }
+
+        @media screen and (max-width: 750px) {
+            .container .add-task input {
+                width: 70%;
+            }
+
+            .container p {
+                max-width: 60%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="add-task">
+            <input id="input" class="input" type="text" placeholder="Add a task">
+            <button class="btn">Submit</button>
+        </div>
+
+        <div class="todo-list">
+        </div>
+    </div>
+</body>
+
+<script>
+    const addTaskBtn = document.querySelector('.btn')
+    const inputValue = document.querySelector('.input')
+    const toDoContent = document.querySelector('.todo-list')
+
+    addTaskBtn.addEventListener('click', () => {
+
+        if (inputValue.value.trim() === '') {
+
+            alert('You need to write something..')
+
+        } else {
+            let paragraph = document.createElement('p')
+            paragraph.innerText = inputValue.value
+            toDoContent.appendChild(paragraph)
+            inputValue.value = ' '
+
+            let icon = document.createElement('i')
+            icon.innerHTML += '<i class="bi bi-trash"></i>'
+            paragraph.appendChild(icon)
+
+            icon.addEventListener('click', () => {
+                toDoContent.removeChild(paragraph)
+            })
+        }
+    })
+
+    inputValue.addEventListener('keyup', (e) => {
+
+        if (e.keyCode == 13 & inputValue.value.trim() !== '') {
+            let paragraph = document.createElement('p')
+            paragraph.innerText = inputValue.value
+            toDoContent.appendChild(paragraph)
+            inputValue.value = ' '
+
+            let icon = document.createElement('i')
+            icon.innerHTML += '<i class="bi bi-trash"></i>'
+            paragraph.appendChild(icon)
+
+            icon.addEventListener('click', () => {
+                toDoContent.removeChild(paragraph)
+            })        
+        }
+    })
+</script>
+
+</html>
