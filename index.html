@@ -12,6 +12,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: sans-serif;
         }
 
         .container {
@@ -38,9 +39,15 @@
             padding: 10px;
             border-radius: 6px;
             border: none;
+            font-weight: bold;
+            background-color: rgb(255, 72, 72);
         }
 
         .container .add-task .btn:hover {
+            background-color: rgb(254, 166, 181);
+        }
+
+        .container .add-task .search-btn:hover {
             background-color: rgb(254, 166, 181);
         }
 
@@ -65,18 +72,22 @@
         }
 
         .container p i:hover {
-            background-color: rgb(254, 166, 181);
+            background-color: rgb(255, 72, 72);
             color: black;
         }
 
         @media screen and (max-width: 750px) {
             .container .add-task input {
-                width: 70%;
+                width: 65%;
             }
 
             .container p {
                 max-width: 60%;
             }
+        }
+
+        .anan {
+            display: none !important;
         }
     </style>
 </head>
@@ -86,6 +97,8 @@
         <div class="add-task">
             <input id="input" class="input" type="text" placeholder="Add a task">
             <button class="btn">Submit</button>
+            <input type="text" class="search" style="margin-top: 10px;" placeholder="Search Something..." />
+            <button class="search-btn">Search</button>
         </div>
 
         <div class="todo-list">
@@ -94,49 +107,62 @@
 </body>
 
 <script>
-    const addTaskBtn = document.querySelector('.btn')
-    const inputValue = document.querySelector('.input')
-    const toDoContent = document.querySelector('.todo-list')
+    const addTaskBtn = document.querySelector('.btn');
+    const inputValue = document.querySelector('.input');
+    const toDoContent = document.querySelector('.todo-list');
+
+    const searchInput = document.querySelector('.search');
 
     addTaskBtn.addEventListener('click', () => {
-
         if (inputValue.value.trim() === '') {
-
-            alert('You need to write something..')
-
+            alert('You need to write something..');
         } else {
-            let paragraph = document.createElement('p')
-            paragraph.innerText = inputValue.value
-            toDoContent.appendChild(paragraph)
-            inputValue.value = ' '
+            let paragraph = document.createElement('p');
+            paragraph.innerText = inputValue.value;
+            toDoContent.appendChild(paragraph);
+            inputValue.value = ' ';
 
-            let icon = document.createElement('i')
-            icon.innerHTML += '<i class="bi bi-trash"></i>'
-            paragraph.appendChild(icon)
+            let icon = document.createElement('i');
+            icon.innerHTML += '<i class="bi bi-trash"></i>';
+            paragraph.appendChild(icon);
 
             icon.addEventListener('click', () => {
-                toDoContent.removeChild(paragraph)
-            })
-        }
-    })
+                toDoContent.removeChild(paragraph);
+            });
+        };
+    });
 
     inputValue.addEventListener('keyup', (e) => {
-
         if (e.keyCode == 13 & inputValue.value.trim() !== '') {
-            let paragraph = document.createElement('p')
-            paragraph.innerText = inputValue.value
-            toDoContent.appendChild(paragraph)
-            inputValue.value = ' '
+            let paragraph = document.createElement('p');
+            paragraph.innerText = inputValue.value;
+            toDoContent.appendChild(paragraph);
+            inputValue.value = ' ';
 
-            let icon = document.createElement('i')
-            icon.innerHTML += '<i class="bi bi-trash"></i>'
-            paragraph.appendChild(icon)
+            let icon = document.createElement('i');
+            icon.innerHTML += '<i class="bi bi-trash"></i>';
+            paragraph.appendChild(icon);
 
             icon.addEventListener('click', () => {
-                toDoContent.removeChild(paragraph)
-            })        
-        }
-    })
+                toDoContent.removeChild(paragraph);
+            });
+        };
+    });
+
+    const filterToDo = (element) => {
+        const toDoList = Array.from(toDoContent.children);
+
+        toDoList.filter(term => !term.textContent.toLocaleLowerCase().includes(element))
+        .forEach(term => term.classList.add('anan'));
+
+        toDoList.filter(term => term.textContent.toLowerCase().includes(element))
+        .forEach(term => term.classList.remove('anan'));
+    };
+
+    searchInput.addEventListener('keyup', () => {
+        const el = searchInput.value.trim().toLowerCase();
+        filterToDo(el)
+    });
 </script>
 
 </html>
